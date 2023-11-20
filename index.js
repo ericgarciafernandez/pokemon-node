@@ -18,6 +18,18 @@ const getPokemons = () => {
         });
 };
 
+const getEspecificPokemon = (request) => {
+    console.log(request.params.id);
+    return axios.get('https://pokeapi.co/api/v2/pokemon/' + request.params.id)
+        .then((apiResponse) => {
+            return apiResponse.data.types;
+        })
+        .catch((error) => {
+            console.error('Error fetching Pokemon data:', error);
+            throw error;
+        });
+};
+
 app.get('/', (request, response) => {
     response.send('test');
 });
@@ -29,6 +41,19 @@ app.get('/api/pokemons', async (request, response) => {
     } catch (error) {
         response.status(500).json({ error: 'Internal Server Error' });
     }
+});
+
+app.get('/api/pokemons/:id', async (request, response) => {
+    try {
+        const pokemonData = await getEspecificPokemon(request);
+        response.json(pokemonData);
+    } catch (error) {
+        response.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.use((request, response) => {
+    response.status(404).json({ error: 'Not found' });
 });
 
 const PORT = 3001;
