@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const getPokemons = () => {
-    return axios.get('https://pokeapi.co/api/v2/pokemon/')
+    return axios.get('https://pokeapi.co/api/v2/pokemon?limit=1000&offset=0')
         .then((apiResponse) => {
             return apiResponse.data.results;
         })
@@ -22,7 +22,7 @@ const getEspecificPokemon = (request) => {
     console.log(request.params.id);
     return axios.get('https://pokeapi.co/api/v2/pokemon/' + request.params.id)
         .then((apiResponse) => {
-            return apiResponse.data.types;
+            return apiResponse.data;
         })
         .catch((error) => {
             console.error('Error fetching Pokemon data:', error);
