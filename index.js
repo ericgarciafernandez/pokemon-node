@@ -7,6 +7,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const getAllPokemons = (request) => {
+    return axios.get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
+        .then((apiResponse) => {
+            return apiResponse.data.results;
+        })
+        .catch((error) => {
+            console.error('Error fetching Pokemon data:', error);
+            throw error;
+        });
+};
+
 const getPokemons = (request) => {
     return axios.get('https://pokeapi.co/api/v2/pokemon/?offset=' + request.params.numOffset)
         .then((apiResponse) => {
@@ -31,6 +42,15 @@ const getEspecificPokemon = (request) => {
 
 app.get('/', (request, response) => {
     response.send('test');
+});
+
+app.get('/api/pokedex', async (request, response) => {
+    try {
+        const pokemonData = await getAllPokemons(request);
+        response.json(pokemonData);
+    } catch (error) {
+        response.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
 app.get('/api/pokedex/:numOffset', async (request, response) => {
