@@ -40,6 +40,28 @@ const getEspecificPokemon = (request) => {
         });
 };
 
+const getTypePokemon = (request) => {
+    return axios.get('https://pokeapi.co/api/v2/type')
+        .then((apiResponse) => {
+            return apiResponse.data.results;
+        })
+        .catch((error) => {
+            console.error('Error fetching Pokemon data:', error);
+            throw error;
+        });
+}
+
+const getPokemonsWithType = (request) => {
+    return axios.get('https://pokeapi.co/api/v2/type/' + request.params.name)
+        .then((apiResponse) => {
+            return apiResponse.data.pokemon;
+        })
+        .catch((error) => {
+            console.error('Error fetching Pokemon data:', error);
+            throw error;
+        });
+}
+
 app.get('/', (request, response) => {
     response.send('test');
 });
@@ -65,6 +87,24 @@ app.get('/api/pokedex/:numOffset', async (request, response) => {
 app.get('/api/pokemons/:name', async (request, response) => {
     try {
         const pokemonData = await getEspecificPokemon(request);
+        response.json(pokemonData);
+    } catch (error) {
+        response.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/api/types', async (request, response) => {
+    try {
+        const pokemonData = await getTypePokemon(request);
+        response.json(pokemonData);
+    } catch (error) {
+        response.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/api/types/:name', async (request, response) => {
+    try {
+        const pokemonData = await getPokemonsWithType(request);
         response.json(pokemonData);
     } catch (error) {
         response.status(500).json({ error: 'Internal Server Error' });
