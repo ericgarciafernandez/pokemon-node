@@ -19,7 +19,7 @@ const getAllPokemons = (request) => {
 };
 
 const getPokemons = (request) => {
-    return axios.get('https://pokeapi.co/api/v2/pokemon/?offset=' + request.params.numOffset)
+    return axios.get('https://pokeapi.co/api/v2/pokemon/?limit=9&offset=' + request.params.numOffset)
         .then((apiResponse) => {
             return apiResponse.data.results;
         })
