@@ -63,12 +63,10 @@ const getPokemonsWithType = (request) => {
 }
 
 app.get('/', (request, response) => {
-    res.header('Access-Control-Allow-Origin', 'https://pokemon-react-nine-xi.vercel.app');
     response.send('test');
 });
 
 app.get('/api/pokedex', async (request, response) => {
-    res.header('Access-Control-Allow-Origin', 'https://pokemon-react-nine-xi.vercel.app');
     try {
         const pokemonData = await getAllPokemons(request);
         response.json(pokemonData);
@@ -78,7 +76,6 @@ app.get('/api/pokedex', async (request, response) => {
 });
 
 app.get('/api/pokedex/:numOffset', async (request, response) => {
-    res.header('Access-Control-Allow-Origin', 'https://pokemon-react-nine-xi.vercel.app');
     try {
         const pokemonData = await getPokemons(request);
         response.json(pokemonData);
@@ -88,7 +85,6 @@ app.get('/api/pokedex/:numOffset', async (request, response) => {
 });
 
 app.get('/api/pokemons/:name', async (request, response) => {
-    res.header('Access-Control-Allow-Origin', 'https://pokemon-react-nine-xi.vercel.app');
     try {
         const pokemonData = await getEspecificPokemon(request);
         response.json(pokemonData);
@@ -98,7 +94,6 @@ app.get('/api/pokemons/:name', async (request, response) => {
 });
 
 app.get('/api/types', async (request, response) => {
-    res.header('Access-Control-Allow-Origin', 'https://pokemon-react-nine-xi.vercel.app');
     try {
         const pokemonData = await getTypePokemon(request);
         response.json(pokemonData);
@@ -108,7 +103,6 @@ app.get('/api/types', async (request, response) => {
 });
 
 app.get('/api/types/:name', async (request, response) => {
-    res.header('Access-Control-Allow-Origin', 'https://pokemon-react-nine-xi.vercel.app');
     try {
         const pokemonData = await getPokemonsWithType(request);
         response.json(pokemonData);
